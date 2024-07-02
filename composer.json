@@ -1,0 +1,39 @@
+{
+    "name": "visuellverstehen/statamic-advanced-invalidator",
+    "description": "A Statamic invalidation class for static caching with advanced capabilities."
+    "autoload": {
+        "psr-4": {
+            "VV\\AdvancedInvalidator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "VV\\AdvancedInvalidator\\Tests\\": "tests"
+        }
+    },
+    "require": {
+        "laravel/framework": "^10.0 || ^11.0",
+        "statamic/cms": "^4.0 || ^5.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "pixelfear/composer-dist-plugin": true
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Advanced Invalidator",
+            "description": "A Statamic invalidation class for static caching with advanced capabilities."
+        },
+        "laravel": {
+            "providers": [
+                "VV\\AdvancedInvalidator\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
