@@ -1,6 +1,9 @@
 {
     "name": "visuellverstehen/statamic-advanced-invalidator",
     "description": "A Statamic invalidation class for static caching with advanced capabilities.",
+    "keywords": [ "statamic", "addon", "static caching", "invalidation", "cache tracker" ],
+    "license": "MIT",
+    "type": "statamic-addon",
     "autoload": {
         "psr-4": {
             "VV\\AdvancedInvalidator\\": "src"
@@ -10,6 +13,14 @@
         "psr-4": {
             "VV\\AdvancedInvalidator\\Tests\\": "tests"
         }
+    },
+    "authors": [
+        {
+            "name": "visuellverstehen"
+        }
+    ],
+    "support": {
+        "email": "hello@visuellverstehen.de"
     },
     "require": {
         "laravel/framework": "^10.0 || ^11.0",
