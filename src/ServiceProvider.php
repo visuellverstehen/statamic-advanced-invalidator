@@ -1,6 +1,6 @@
 <?php
 
-namespace VV\StatamicAdvancedInvalidator;
+namespace VV\AdvancedInvalidator;
 
 use Statamic\Providers\AddonServiceProvider;
 
