@@ -1,6 +1,6 @@
 {
     "name": "visuellverstehen/statamic-advanced-invalidator",
-    "description": "A Statamic invalidation class for static caching with advanced capabilities."
+    "description": "A Statamic invalidation class for static caching with advanced capabilities.",
     "autoload": {
         "psr-4": {
             "VV\\AdvancedInvalidator\\": "src"
