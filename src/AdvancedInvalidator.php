@@ -16,24 +16,22 @@ use Statamic\StaticCaching\DefaultInvalidator;
 
 class AdvancedInvalidator extends DefaultInvalidator
 {
-    protected $namedRoutesKey = 'named_routes';
-
     private $rulePath;
 
     public function invalidate($item)
     {
-        $this->resolveNamedRoutes($item);
-
-        $this->invalidateKeys($item);
-        $this->invalidateTags($item);
+        $rules = $this->getItemRules($item);
+        
+        $this->invalidateKeys($rules);
+        $this->invalidateTags($rules);
+        
+        $this->resolveNamedRoutes($rules);
 
         parent::invalidate($item);
     }
 
-    protected function invalidateKeys($item)
+    protected function invalidateKeys($rules)
     {
-        $rules = $this->getItemRules($item);
-
         if (! $keys = Arr::get($rules, 'keys')) {
             return;
         }
@@ -55,7 +53,7 @@ class AdvancedInvalidator extends DefaultInvalidator
         }
     }
 
-    protected function invalidateTags($item)
+    protected function invalidateTags($rules)
     {
         $cacheTracker = '\Thoughtco\StatamicCacheTracker\Facades';
         
@@ -63,7 +61,7 @@ class AdvancedInvalidator extends DefaultInvalidator
             return;
         }
 
-        if ($tags = Arr::get($this->getItemRules($item), 'tags')) {
+        if ($tags = Arr::get($rules, 'tags')) {
             $cacheTracker::invalidate($tags);
         }
     }
@@ -102,9 +100,9 @@ class AdvancedInvalidator extends DefaultInvalidator
         return Arr::get($rules, $rulePath, []);
     }
 
-    private function resolveNamedRoutes($item)
+    private function resolveNamedRoutes($rules)
     {
-        if (! $routes = Arr::get($this->getItemRules($item), $this->namedRoutesKey)) {
+        if (! $routes = Arr::get($rules, 'named_routes')) {
             return;
         }
 
@@ -124,6 +122,6 @@ class AdvancedInvalidator extends DefaultInvalidator
             ->toArray();
 
         Arr::set($this->rules, $this->rulePath . '.urls', $mergedUrls);
-        Arr::forget($this->rules, $this->rulePath . '.' . $this->namedRoutesKey);
+        Arr::forget($this->rules, $this->rulePath . '.' . 'named_routes');
     }
 }
