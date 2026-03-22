@@ -55,7 +55,7 @@ class AdvancedInvalidator extends DefaultInvalidator
 
     protected function invalidateTags($rules)
     {
-        $cacheTracker = '\Thoughtco\StatamicCacheTracker\Facades';
+        $cacheTracker = '\Thoughtco\StatamicCacheTracker\Facades\CacheTracker';
 
         if (! class_exists($cacheTracker)) {
             return;
