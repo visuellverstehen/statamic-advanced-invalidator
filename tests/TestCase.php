@@ -1,8 +1,8 @@
 <?php
 
-namespace Visuellverstehen\StatamicAdvancedInvalidator\Tests;
+namespace VV\AdvancedInvalidator\Tests;
 
-use Visuellverstehen\StatamicAdvancedInvalidator\ServiceProvider;
+use VV\AdvancedInvalidator\ServiceProvider;
 use Statamic\Testing\AddonTestCase;
 
 abstract class TestCase extends AddonTestCase

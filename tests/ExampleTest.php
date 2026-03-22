@@ -1,6 +1,6 @@
 <?php
 
-namespace Visuellverstehen\StatamicAdvancedInvalidator\Tests;
+namespace VV\AdvancedInvalidator\Tests;
 
 class ExampleTest extends TestCase
 {
