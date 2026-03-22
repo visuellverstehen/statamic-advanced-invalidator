@@ -2,8 +2,8 @@
 
 namespace VV\AdvancedInvalidator\Tests;
 
-use VV\AdvancedInvalidator\ServiceProvider;
 use Statamic\Testing\AddonTestCase;
+use VV\AdvancedInvalidator\ServiceProvider;
 
 abstract class TestCase extends AddonTestCase
 {

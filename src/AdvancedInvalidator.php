@@ -21,10 +21,10 @@ class AdvancedInvalidator extends DefaultInvalidator
     public function invalidate($item)
     {
         $rules = $this->getItemRules($item);
-        
+
         $this->invalidateKeys($rules);
         $this->invalidateTags($rules);
-        
+
         $this->resolveNamedRoutes($rules);
 
         parent::invalidate($item);
@@ -56,7 +56,7 @@ class AdvancedInvalidator extends DefaultInvalidator
     protected function invalidateTags($rules)
     {
         $cacheTracker = '\Thoughtco\StatamicCacheTracker\Facades';
-        
+
         if (! class_exists($cacheTracker)) {
             return;
         }
