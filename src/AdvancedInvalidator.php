@@ -16,9 +16,9 @@ use Statamic\StaticCaching\DefaultInvalidator;
 
 class AdvancedInvalidator extends DefaultInvalidator
 {
-    private $rulePath;
+    private ?string $rulePath = null;
 
-    public function invalidate($item)
+    public function invalidate(mixed $item): void
     {
         $rules = $this->getItemRules($item);
 
@@ -30,7 +30,7 @@ class AdvancedInvalidator extends DefaultInvalidator
         parent::invalidate($item);
     }
 
-    protected function invalidateKeys($rules)
+    protected function invalidateKeys(array $rules): void
     {
         if (! $keys = Arr::get($rules, 'keys')) {
             return;
@@ -53,7 +53,7 @@ class AdvancedInvalidator extends DefaultInvalidator
         }
     }
 
-    protected function invalidateTags($rules)
+    protected function invalidateTags(array $rules): void
     {
         $cacheTracker = '\Thoughtco\StatamicCacheTracker\Facades\CacheTracker';
 
@@ -66,7 +66,7 @@ class AdvancedInvalidator extends DefaultInvalidator
         }
     }
 
-    private function getItemRules($item): array
+    private function getItemRules(mixed $item): array
     {
         if (empty($rules = config('statamic.static_caching.invalidation.rules'))) {
             return [];
@@ -100,7 +100,7 @@ class AdvancedInvalidator extends DefaultInvalidator
         return Arr::get($rules, $rulePath, []);
     }
 
-    private function resolveNamedRoutes($rules)
+    private function resolveNamedRoutes(array $rules): void
     {
         if (! $routes = Arr::get($rules, 'named_routes')) {
             return;
