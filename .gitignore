@@ -1,3 +1,24 @@
+# OS
 .DS_Store
+Thumbs.db
+
+# IDEs
+.idea
+.vscode
 .nova
-vendor
+*.swp
+*.swo
+*~
+
+# Dependencies
+/vendor
+composer.lock
+
+# Testing
+.phpunit.result.cache
+.phpunit.cache
+coverage/
+
+# Build artifacts
+build/
+dist/
