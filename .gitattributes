@@ -1,0 +1,7 @@
+/tests export-ignore
+/phpunit.xml export-ignore
+/.github export-ignore
+/duster.json export-ignore
+/REVIEW.md export-ignore
+/.gitignore export-ignore
+/.nova export-ignore
