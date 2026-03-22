@@ -25,7 +25,7 @@ class AdvancedInvalidator extends DefaultInvalidator
         $this->invalidateKeys($rules);
         $this->invalidateTags($rules);
 
-        $this->resolveNamedRoutes($rules);
+        $this->mergeResolvedNamedRoutes($rules);
 
         parent::invalidate($item);
     }
@@ -100,28 +100,31 @@ class AdvancedInvalidator extends DefaultInvalidator
         return Arr::get($rules, $rulePath, []);
     }
 
-    private function resolveNamedRoutes(array $rules): void
+    private function mergeResolvedNamedRoutes(array $rules): void
     {
         if (! $routes = Arr::get($rules, 'named_routes')) {
             return;
         }
 
-        $mergedUrls = collect($routes)
+        $resolvedUrls = collect($routes)
             ->map(function ($route) {
                 try {
-                    $uri = route($route, [], false);
+                    return route($route, [], false);
                 } catch (Exception) {
-                    return;
+                    return null;
                 }
-
-                return $uri;
             })
             ->filter()
-            ->merge(Arr::get($this->rules, $this->rulePath . '.urls'), [])
+            ->toArray();
+
+        $existingUrls = Arr::get($this->rules, $this->rulePath . '.urls', []);
+        $mergedUrls = collect($existingUrls)
+            ->merge($resolvedUrls)
             ->unique()
+            ->values()
             ->toArray();
 
         Arr::set($this->rules, $this->rulePath . '.urls', $mergedUrls);
-        Arr::forget($this->rules, $this->rulePath . '.' . 'named_routes');
+        Arr::forget($this->rules, $this->rulePath . '.named_routes');
     }
 }

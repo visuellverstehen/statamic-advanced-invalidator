@@ -94,3 +94,39 @@ it('does nothing when no named routes defined', function () {
 
     expect(Arr::get($rules, 'collections.blog.urls'))->toBe(['/blog']);
 });
+
+it('produces consistent results on multiple invalidate calls', function () {
+    config(['statamic.static_caching.invalidation.rules' => [
+        'collections' => [
+            'blog' => [
+                'named_routes' => ['test.route'],
+                'urls' => ['/existing-url'],
+            ],
+        ],
+    ]]);
+
+    $invalidator = createInvalidator();
+
+    // First call
+    $invalidator->invalidate(mockEntry('blog'));
+
+    $reflection = new ReflectionClass($invalidator);
+    $property = $reflection->getProperty('rules');
+    $property->setAccessible(true);
+    $rules = $property->getValue($invalidator);
+
+    $firstCallUrls = Arr::get($rules, 'collections.blog.urls');
+
+    // Second call - should produce same result
+    $invalidator->invalidate(mockEntry('blog'));
+
+    $rules = $property->getValue($invalidator);
+    $secondCallUrls = Arr::get($rules, 'collections.blog.urls');
+
+    // Both calls should result in the same URLs
+    expect($firstCallUrls)->toBe(['/existing-url', '/test-page']);
+    expect($secondCallUrls)->toBe(['/existing-url', '/test-page']);
+
+    // Named routes should be removed after first call
+    expect(Arr::get($rules, 'collections.blog.named_routes'))->toBeNull();
+});
