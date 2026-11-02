@@ -1,0 +1,68 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Statamic ${{ matrix.statamic }} / PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: '8.2'
+            statamic: '5'
+            laravel: '^12.0'
+            testbench: '^10.8'
+          - php: '8.4'
+            statamic: '5'
+            laravel: '^12.0'
+            testbench: '^10.8'
+          - php: '8.3'
+            statamic: '6'
+            laravel: '^13.0'
+            testbench: '^11.0'
+          - php: '8.4'
+            statamic: '6'
+            laravel: '^13.0'
+            testbench: '^11.0'
+          - php: '8.5'
+            statamic: '5'
+            laravel: '^12.0'
+            testbench: '^10.8'
+          - php: '8.5'
+            statamic: '6'
+            laravel: '^13.0'
+            testbench: '^11.0'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, dom, fileinfo, filter, tokenizer, xml, xmlwriter, ctype, json, iconv, intl, zip
+          coverage: none
+
+      - name: Pin Statamic, Laravel and Testbench for this matrix entry
+        run: |
+          composer require --no-update --no-interaction \
+            "statamic/cms:^${{ matrix.statamic }}.0" \
+            "laravel/framework:${{ matrix.laravel }}"
+          composer require --dev --no-update --no-interaction \
+            "orchestra/testbench:${{ matrix.testbench }}"
+
+      - name: Install dependencies
+        run: composer update --no-interaction --no-progress --prefer-dist --no-scripts
+
+      - name: Run tests
+        run: vendor/bin/phpunit
