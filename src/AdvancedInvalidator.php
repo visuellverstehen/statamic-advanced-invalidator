@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Statamic\Contracts\Assets\Asset;
 use Statamic\Contracts\Entries\Entry;
 use Statamic\Contracts\Forms\Form;
-use Statamic\Contracts\Globals\GlobalSet;
+use Statamic\Contracts\Globals\Variables;
 use Statamic\Contracts\Structures\Nav;
 use Statamic\Contracts\Taxonomies\Term;
 use Statamic\Facades\Site;
@@ -84,7 +84,7 @@ class AdvancedInvalidator extends DefaultInvalidator
             case $item instanceof Nav:
                 $rulePath = 'navigation.' . $item->handle();
                 break;
-            case $item instanceof GlobalSet:
+            case $item instanceof Variables:
                 $rulePath = 'globals.' . $item->handle();
                 break;
             case $item instanceof Asset:
