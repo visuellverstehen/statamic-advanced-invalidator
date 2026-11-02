@@ -34,6 +34,14 @@ jobs:
             statamic: '6'
             laravel: '^13.0'
             testbench: '^11.0'
+          - php: '8.5'
+            statamic: '5'
+            laravel: '^12.0'
+            testbench: '^10.8'
+          - php: '8.5'
+            statamic: '6'
+            laravel: '^13.0'
+            testbench: '^11.0'
 
     steps:
       - uses: actions/checkout@v4
